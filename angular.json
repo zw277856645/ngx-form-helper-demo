@@ -17,6 +17,18 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "node_modules/semantic-ui-css/themes/default/assets/fonts",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/semantic-ui-css/themes/default/assets/images",
+                "output": "/"
+              }
+            ],
             "styles": [
               "node_modules/semantic-ui-css/semantic.css",
               "node_modules/ngx-form-helper/ngx-form-helper.css",
@@ -29,12 +41,6 @@
           },
           "configurations": {
             "production": {
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "themes/default/assets/fonts",
-                  "themes/default/assets/images"
-                ]
-              },
               "fileReplacements": [
                 {
                   "replace": "src/environment/environment.ts",
