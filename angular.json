@@ -21,12 +21,12 @@
               {
                 "glob": "**/*",
                 "input": "node_modules/semantic-ui-css/themes/default/assets/fonts",
-                "output": "/"
+                "output": "/themes/default/assets/fonts"
               },
               {
                 "glob": "**/*",
                 "input": "node_modules/semantic-ui-css/themes/default/assets/images",
-                "output": "/"
+                "output": "/themes/default/assets/fonts"
               }
             ],
             "styles": [
