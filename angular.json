@@ -29,6 +29,12 @@
           },
           "configurations": {
             "production": {
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "themes/default/assets/fonts",
+                  "themes/default/assets/images"
+                ]
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environment/environment.ts",
