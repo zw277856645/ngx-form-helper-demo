@@ -1,0 +1,40 @@
+.ui.container {
+  margin-top: 20px;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  .ui.radio + .ui.radio,
+  .ui.checkbox + .ui.checkbox {
+    margin-left: 20px;
+  }
+  .ui.checkbox + .ui.button {
+    margin-left: 20px;
+  }
+  .field.buttons {
+    margin-top: 40px;
+  }
+  .divider {
+    margin-top: 40px;
+    border-style: dashed;
+  }
+}
+
+.out-button {
+  margin-top: 12px;
+}
+
+.modal-inner-scroll {
+  .content {
+    max-height: 300px;
+    overflow-y: auto;
+    form {
+      height: 1000px;
+    }
+  }
+}
+
+label.inline,
+[ngModelGroup].inline,
+[formArrayName].inline,
+[ng-reflect-name].inline {
+  display: inline-block !important;
+}

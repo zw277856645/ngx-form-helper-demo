@@ -1,0 +1,270 @@
+<div class="ui container">
+  <form class="ui form" formHelper offsetTop="28" #formHelperCtrl="formHelper">
+    <div class="field">
+      <label>名字</label>
+      <div class="ui input">
+        <input type="text" [name]="'name'" [(ngModel)]="name" autocomplete="off" trimmedRequired nameUnique>
+      </div>
+      <eh-tooltip ref="name" [errorMessages]="nameMessages"></eh-tooltip>
+    </div>
+
+    <div class="field">
+      <label>类型</label>
+      <div class="ui checkbox radio">
+        <input type="radio" (click)="type = 0" [checked]="type == 0">
+        <label>类型1</label>
+      </div>
+      <div class="ui checkbox radio">
+        <input type="radio" (click)="type = 1" [checked]="type == 1">
+        <label>类型2</label>
+      </div>
+    </div>
+
+    <div *ngIf="type == 0">
+      <div class="field">
+        <label>说明</label>
+        <textarea name="desc" trimmedRequired [(ngModel)]="desc" autocomplete="off" rows="3" autoSize
+                  (sizeChange)="descCtrl.reposition()"></textarea>
+        <eh-tooltip ref="desc" #descCtrl="ehTooltip">
+          <eh-tooltip-message error="trimmedRequired">不能为空</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+
+      <div class="field">
+        <label>Input Hidden</label>
+        <input type="text" placeholder="占位" disabled>
+        <input type="hidden" name="hidden" [(ngModel)]="hidden" required>
+        <eh-tooltip ref="hidden" positionProxy="~" scrollProxy="~">
+          <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+
+      <div class="field">
+        <label class="inline">选择喜好</label>
+        <eh-text ref="love" animation="flyLeft">
+          <eh-text-message error="required">至少选择一项</eh-text-message>
+        </eh-text>
+        <div class="ui fluid selection dropdown" dropdown name="love" [(ngModel)]="love" required>
+          <i class="icon dropdown"></i>
+          <div class="default text">请选择</div>
+          <div class="menu">
+            <div class="item" data-value="">请选择</div>
+            <div class="item" data-value="1">读书</div>
+            <div class="item" data-value="2">看报</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field required">
+        <label class="inline">性别</label>
+        <input type="text" name="sex" [(ngModel)]="sex" autocomplete="off" trimmedRequired pattern="^[a-zA-Z]*$">
+        <eh-text ref="sex" animation="slideDown" [inline]="false" [float]="true" [right]="true">
+          <eh-text-message error="trimmedRequired">不能为空</eh-text-message>
+          <eh-text-message error="pattern">请输入字符</eh-text-message>
+        </eh-text>
+      </div>
+
+      <div class="field">
+        <label>组(动态)</label>
+        <div [ngModelGroup]="'group'" checkboxRequired minCheckedNum="2" maxCheckedNum="4" class="inline">
+          <div class="ui checkbox" *ngFor="let ck of cks;trackBy:trackByCk;index as i">
+            <input type="checkbox" [(ngModel)]="ck.checked" [name]="'ck-' + ck.uuid">
+            <label>
+              {{ck.label}}
+              <i class="icon red remove" (click)="removeCk(i)"></i>
+            </label>
+          </div>
+          <button type="button" class="ui button tiny" (click)="addCK()">添加</button>
+        </div>
+        <eh-tooltip ref="group" position="right center">
+          <eh-tooltip-message error="checkboxRequired">请选择</eh-tooltip-message>
+          <eh-tooltip-message error="checkboxRequiredMin">至少选择两项</eh-tooltip-message>
+          <eh-tooltip-message error="checkboxRequiredMax">至多选择四项</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+
+      <div class="field">
+        <label>滚动对象</label>
+        <div class="ui styled fluid accordion" accordion>
+          <div class="title" ehSimple ref="gp" [validateImmediate]="true" scrollProxy="~"
+               (click)="formHelperCtrl.repositionMessages('gp')">
+            <i class="dropdown icon"></i>
+            Accordion
+          </div>
+          <div class="content" ngModelGroup="gp">
+            <div class="field">
+              <label>生日</label>
+              <input type="text" name="birth" [(ngModel)]="birth" required>
+              <eh-tooltip ref="birth">
+                <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+              </eh-tooltip>
+            </div>
+            <div class="field required">
+              <label>请求url</label>
+              <div class="ui left action input">
+                <div class="ui selection dropdown" dropdown>
+                  <i class="dropdown icon"></i>
+                  <div class="default text">请选择</div>
+                  <div class="menu">
+                    <div class="item">GET</div>
+                    <div class="item">POST</div>
+                  </div>
+                </div>
+                <input type="text" name="url" [(ngModel)]="url" required autocomplete="off" maxlength="500">
+              </div>
+              <eh-tooltip ref="url">
+                <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+              </eh-tooltip>
+            </div>
+            <div class="field">
+              <label>远程2</label>
+              <input type="text" name="remote2" [(ngModel)]="remote2" autocomplete="off" nameUnique>
+              <eh-tooltip ref="remote2">
+                <eh-tooltip-message error="nameUnique" [async]="true">重复</eh-tooltip-message>
+              </eh-tooltip>
+            </div>
+          </div>
+
+          <div class="title" (click)="simpleCtrl.repositionMessages()">
+            <i class="dropdown icon"></i>
+            Accordion2
+          </div>
+          <div class="content" ngModelGroup="gp2" ehSimple scrollProxy="~" #simpleCtrl="ehSimple">
+            <div class="field">
+              <label>生日2</label>
+              <input type="text" name="birth2" [(ngModel)]="birth2" required>
+              <eh-tooltip ref="birth2">
+                <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+              </eh-tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blank" [style.height.px]="pageHeight"></div>
+
+      <div class="field buttons">
+        <button shLoader type="submit" class="ui button small instagram right labeled icon">
+          <i class="icon save"></i>
+          保存1
+        </button>
+        <button type="button" class="ui button small" #reset>重置</button>
+      </div>
+    </div>
+
+    <ng-container *ngTemplateOutlet="template;context:{type:type,$implicit:sex2}"></ng-container>
+
+    <!-- ng-template 必须在form内部，否则模板内的ngModel将不会注册到ngForm中 -->
+    <ng-template #template let-type="type">
+      <div *ngIf="type == 1">
+        <div class="field">
+          <label>性别</label>
+          <input type="text" name="sex2" required [(ngModel)]="sex2" autocomplete="off" pattern="^\d*$">
+          <eh-tooltip ref="sex2">
+            <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+            <eh-tooltip-message error="pattern">只能为数字</eh-tooltip-message>
+          </eh-tooltip>
+        </div>
+        <div class="field required">
+          <label>List Required</label>
+          <tag-input name="assertMatch"
+                     [(ngModel)]="assertMatch"
+                     theme="bootstrap3-info"
+                     [addOnBlur]="true"
+                     [addOnPaste]="true"
+                     [modelAsStrings]="true"
+                     [ripple]="false"
+                     [animationDuration]="{enter:'0ms',leave:'0ms'}"
+                     placeholder="请输入"
+                     secondaryPlaceholder="请输入"
+                     listRequired
+                     minListNum="2"
+                     maxListNum="4"></tag-input>
+          <eh-tooltip ref="assertMatch" [errorMessages]="assertMatchMessages"></eh-tooltip>
+        </div>
+        <div class="field buttons">
+          <button shLoader type="submit" class="ui button small instagram">保存2</button>
+          <button type="button" class="ui button small" #reset>重置</button>
+        </div>
+      </div>
+    </ng-template>
+  </form>
+
+  <div class="out-button">
+    <button shLoader [refForm]="formHelperCtrl" type="button" class="ui button small instagram right labeled icon">
+      <i class="icon save"></i>
+      保存 - 表单外部
+    </button>
+  </div>
+
+  <div class="ui divider"></div>
+  <button type="button" class="ui button tiny" (click)="addHeight()">增加页面高度(+1000px)</button>
+  <button type="button" class="ui tiny button modal-button" (click)="modalCtrl.behavior('show')">Modal Scroll</button>
+  <button type="button" class="ui tiny button modal-inner-button" (click)="innerModalCtrl.behavior('show')">
+    Modal Inner Scroll
+  </button>
+  <a class="ui tiny button teal" routerLink="/model-driven">Model Driven Form</a>
+</div>
+
+<div class="ui small modal modal-scroll" modal #modalCtrl="modal">
+  <div class="header">
+    弹层表单
+  </div>
+  <div class="content">
+    <form class="ui form" formHelper #modalForm="formHelper" context=".ui.page.modals">
+      <div class="field">
+        <label>地址</label>
+        <input type="text" name="addr" [(ngModel)]="addr" autocomplete="off" required>
+        <eh-tooltip ref="addr">
+          <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+      <div class="field">
+        <label>评论</label>
+        <textarea name="issue" required [(ngModel)]="issue" autocomplete="off" rows="60"></textarea>
+        <eh-tooltip ref="issue">
+          <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui deny button">关闭</div>
+    <button class="ui instagram right labeled icon button" shLoader [refForm]="modalForm">
+      提交
+      <i class="checkmark icon"></i>
+    </button>
+  </div>
+</div>
+
+<div class="ui small modal modal-inner-scroll" modal #innerModalCtrl="modal">
+  <div class="header">
+    弹层表单
+  </div>
+  <div class="content">
+    <form class="ui form" formHelper #innerModalForm="formHelper" context="..">
+      <div class="field">
+        <label>地址</label>
+        <input type="text" name="addr2" [(ngModel)]="addr2" autocomplete="off" required>
+        <eh-tooltip ref="addr2">
+          <eh-tooltip-message error="required">不能为空</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+      <div class="field">
+        <label>评论</label>
+        <textarea name="issue2" trimmedRequired [(ngModel)]="issue2" autocomplete="off" autoSize rows="3"
+                  minHeight="100" (sizeChange)="issue2Ctrl.reposition()"></textarea>
+        <eh-tooltip ref="issue2" #issue2Ctrl="ehTooltip">
+          <eh-tooltip-message error="trimmedRequired">不能为空</eh-tooltip-message>
+        </eh-tooltip>
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui deny button">关闭</div>
+    <div class="ui instagram right labeled icon button" shLoader [refForm]="innerModalForm">
+      提交
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
