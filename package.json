@@ -54,7 +54,7 @@
     "typescript": "2.9.2",
     "webpack": "4.29.6",
     "webpack-cli": "3.1.0",
-    "webpack-dev-server": "3.1.4",
+    "webpack-dev-server": "3.9.0",
     "webpack-merge": "3.0.0",
     "file-loader": "3.0.1",
     "css-loader": "0.26.1",
